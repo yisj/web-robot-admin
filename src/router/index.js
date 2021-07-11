@@ -73,6 +73,19 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
+    redirect: '/robot-list',
+    children: [
+      {
+        path: 'robot-list',
+        component: () => import('@/views/robot-list/index'),
+        name: 'RobotList',
+        meta: { title: 'Robot List', icon: 'list', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/dashboard',
+    component: Layout,
     redirect: '/dashboard',
     children: [
       {

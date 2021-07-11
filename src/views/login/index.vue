@@ -3,7 +3,8 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h1 class="title">Hyundai Engineering & Construction</h1>
+        <h1 class="subtitle">Robot Monitoring/Operating System</h1>
       </div>
 
       <el-form-item prop="username">
@@ -290,10 +291,17 @@ $light_gray:#eee;
   .title-container {
     position: relative;
 
-    .title {
+    .subtitle {
       font-size: 26px;
       color: $light_gray;
       margin: 0px auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
+    .title {
+      font-size: 25.5px;
+      color: $light_gray;
+      margin: 0px auto 0px auto;
       text-align: center;
       font-weight: bold;
     }
