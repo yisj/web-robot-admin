@@ -5,6 +5,9 @@
       <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
         Excel 다운로드
       </el-button>
+      <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" icon="el-icon-document" @click="modelSensorDrawer = true">
+        Model & Sensor Info.
+      </el-button>
     </div>
 
     <el-table v-loading="listLoading" :data="list" element-loading-text="Loading..." border fit highlight-current-row>
@@ -54,6 +57,23 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-drawer
+      id="modelSensorDrawer"
+      title="Model & Sensor Info."
+      :visible.sync="modelSensorDrawer"
+      direction="btt"
+      :before-close="handleClose"
+      size="70%"
+    >
+      <h1>Models</h1>
+      <h2>Spot</h2>
+      <p>Spot is ...</p>
+      <h2>Husky</h2>
+      <p>Husky is ...</p>
+      <h1>Sensors</h1>
+      <h2>3D LiDAR</h2>
+      <h2>360 Camer</h2>
+    </el-drawer>
   </div>
 </template>
 
@@ -66,6 +86,7 @@ export default {
   name: 'ExportExcel',
   data() {
     return {
+      modelSensorDrawer: false,
       list: null,
       listLoading: true,
       downloadLoading: false,
@@ -84,6 +105,16 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    showModelSensorInfo() {
+
+    },
+    handleClose(done) {
+      this.$confirm('Are you sure you want to close this?')
+        .then(_ => {
+          done()
+        })
+        .catch(_ => {})
     },
     handleDownload() {
       this.downloadLoading = true
@@ -121,5 +152,9 @@ export default {
   color: #606266;
   line-height: 40px;
   padding: 0 12px 0 30px;
+}
+
+#modelSensorDrawer {
+
 }
 </style>
