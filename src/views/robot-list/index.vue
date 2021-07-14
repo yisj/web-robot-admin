@@ -57,12 +57,12 @@
         </template>
       </el-table-column>
     </el-table>
+
     <el-drawer
       id="modelSensorDrawer"
       title="Model & Sensor Info."
       :visible.sync="modelSensorDrawer"
       direction="btt"
-      :before-close="handleClose"
       size="70%"
     >
       <h1>Models</h1>
@@ -73,6 +73,16 @@
       <h1>Sensors</h1>
       <h2>3D LiDAR</h2>
       <h2>360 Camer</h2>
+    </el-drawer>
+
+    <el-drawer
+      id="robotInfoDrawer"
+      title="Robot Info."
+      :visible.sync="robotDrawer"
+      direction="rtl"
+      size="50%"
+    >
+      <h1>Robot Detail Info</h1>
     </el-drawer>
   </div>
 </template>
@@ -105,16 +115,6 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
-    },
-    showModelSensorInfo() {
-
-    },
-    handleClose(done) {
-      this.$confirm('Are you sure you want to close this?')
-        .then(_ => {
-          done()
-        })
-        .catch(_ => {})
     },
     handleDownload() {
       this.downloadLoading = true
