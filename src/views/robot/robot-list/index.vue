@@ -1,57 +1,59 @@
 <template>
   <div class="app-container">
-
     <div>
       <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
         Excel 다운로드
       </el-button>
       <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" icon="el-icon-document" @click="modelSensorDrawer = true">
-        Model & Sensor Info.
+        모델/센서 정보
+      </el-button>
+      <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="success" round @click="$router.push('/robot/add-robot')">
+        로봇 추가
       </el-button>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" element-loading-text="Loading..." border fit highlight-current-row>
+    <el-table v-loading="listLoading" class="robot-list-table" :data="list" element-loading-text="Loading..." border fit highlight-current-row @row-click="showRobotInfoDrawer">
       <el-table-column align="center" label="Id" width="50">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
       </el-table-column>
-      <el-table-column label="Robot Id" width="90" align="center">
+      <el-table-column label="로봇 Id" width="90" align="center">
         <template slot-scope="scope">
           {{ scope.row.robot_id }}
         </template>
       </el-table-column>
-      <el-table-column label="Robot IPv4" width="120" align="center">
+      <el-table-column label="로봇 IP 주소" width="120" align="center">
         <template slot-scope="scope">
           <el-tag>{{ scope.row.robot_ip }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Model" width="115" align="center">
+      <el-table-column label="모델명" width="115" align="center">
         <template slot-scope="scope">
           {{ scope.row.model }}
         </template>
       </el-table-column>
-      <el-table-column align="center" label="Site Id" width="100">
+      <el-table-column label="사이트 Id" align="center" width="100">
         <template slot-scope="scope">
           {{ scope.row.site_id }}
         </template>
       </el-table-column>
-      <el-table-column label="Site Name" align="center">
+      <el-table-column label="사이트명" align="center">
         <template slot-scope="scope">
           {{ scope.row.site_name }}
         </template>
       </el-table-column>
-      <el-table-column label="Status" width="100" align="center">
+      <el-table-column label="상태" width="100" align="center">
         <template slot-scope="scope">
           {{ scope.row.status }}
         </template>
       </el-table-column>
-      <el-table-column label="Battery" width="80" align="center">
+      <el-table-column label="배터리" width="80" align="center">
         <template slot-scope="scope">
           {{ scope.row.battery+"%" }}
         </template>
       </el-table-column>
-      <el-table-column label="Sensors" width="115" align="center">
+      <el-table-column label="센서" width="115" align="center">
         <template slot-scope="scope">
           {{ scope.row.sensors[0] }}
         </template>
@@ -60,7 +62,7 @@
 
     <el-drawer
       id="modelSensorDrawer"
-      title="Model & Sensor Info."
+      title="모델/센서 정보"
       :visible.sync="modelSensorDrawer"
       direction="btt"
       size="70%"
@@ -77,12 +79,22 @@
 
     <el-drawer
       id="robotInfoDrawer"
-      title="Robot Info."
-      :visible.sync="robotDrawer"
+      :title="'로봇 '+robotInfo.robot_id+'('+robotInfo.model+') 정보'"
+      :visible.sync="robotInfoDrawer"
       direction="rtl"
-      size="50%"
+      size="40%"
     >
-      <h1>Robot Detail Info</h1>
+      <div class="drawer-container">
+
+        <div>
+          <label>Robot ID: {{ robotInfo.robot_id }}</label><br>
+          <label>IP Address: {{ robotInfo.robot_ip }}</label><br>
+          <label>Robot Model: {{ robotInfo.model }}</label><br>
+        </div>
+        <br>
+        <el-button @click="$router.push('/robot/robot-dashboard')">Robot Dashboard</el-button>
+        <el-button @click="$router.push('/robot/robot-operation')">Robot Operation</el-button>
+      </div>
     </el-drawer>
   </div>
 </template>
@@ -97,12 +109,18 @@ export default {
   data() {
     return {
       modelSensorDrawer: false,
+      robotInfoDrawer: false,
       list: null,
       listLoading: true,
       downloadLoading: false,
       filename: '',
       autoWidth: true,
-      bookType: 'xlsx'
+      bookType: 'xlsx',
+      robotInfo: {
+        robot_id: '',
+        robot_ip: '',
+        model: ''
+      }
     }
   },
   created() {
@@ -115,6 +133,11 @@ export default {
         this.list = response.data.items
         this.listLoading = false
       })
+    },
+    showRobotInfoDrawer(row) {
+      console.log(row)
+      this.robotInfoDrawer = true
+      this.robotInfo = row
     },
     handleDownload() {
       this.downloadLoading = true
@@ -147,8 +170,17 @@ export default {
 </script>
 
 <style>
+
+.drawer-container {
+  padding: 20px;
+}
+
+.robot-list-table {
+  font-size: 12px;
+}
+
 .radio-label {
-  font-size: 14px;
+  font-size: 12px;
   color: #606266;
   line-height: 40px;
   padding: 0 12px 0 30px;

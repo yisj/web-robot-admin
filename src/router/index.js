@@ -71,28 +71,53 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/',
+    path: '/robot',
     component: Layout,
-    redirect: '/robot-list',
+    redirect: '/robot/robot-list',
+    name: 'Robot',
+    meta: {
+      title: '로봇'
+    },
     children: [
       {
         path: 'robot-list',
-        component: () => import('@/views/robot-list/index'),
+        component: () => import('@/views/robot/robot-list/index'),
         name: 'RobotList',
-        meta: { title: 'Robot List', icon: 'list', affix: true }
+        meta: { title: '로봇 리스트', affix: true }
+      },
+      {
+        path: 'add-robot',
+        component: () => import('@/views/robot/add-robot/index'),
+        name: 'AddRobot',
+        hidden: true,
+        meta: { title: '로봇 추가', affix: true }
+      },
+      {
+        path: 'robot-dashboard',
+        component: () => import('@/views/robot/robot-dashboard/index'),
+        name: 'RobotDashboard',
+        hidden: true,
+        meta: { title: '로봇 상황판', affix: true }
+      },
+      {
+        path: 'robot-operation',
+        component: () => import('@/views/robot/robot-operation/index'),
+        name: 'RobotOperation',
+        hidden: true,
+        meta: { title: '로봇 작업', affix: true }
       }
     ]
   },
   {
-    path: '/dashboard',
+    path: '/',
     component: Layout,
     redirect: '/dashboard',
     children: [
       {
         path: 'dashboard',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        name: 'SystemDashboard',
+        meta: { title: '시스템 상황판', affix: true }
       }
     ]
   },
