@@ -16,11 +16,11 @@
 
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-
-          <span class="user-name">이승재 대리</span>
-          <i class="el-icon-caret-bottom" />
-
+          <div class="avatar-arrange">
+            <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+            <span class="user-name">이승재 대리</span>
+            <i class="el-icon-caret-bottom" />
+          </div>
         </div>
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
@@ -131,11 +131,17 @@ export default {
     .avatar-container {
       margin-right: 30px;
 
+      .avatar-arrange {
+        display: flex;
+        justify-content: center;
+      }
+
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
 
         .user-name{
+          padding-left: 5px;
           font-size: 12px;
         }
 
@@ -150,7 +156,7 @@ export default {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 25px;
+          top: 18px;
           font-size: 12px;
         }
       }

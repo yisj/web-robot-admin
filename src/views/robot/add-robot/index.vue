@@ -2,10 +2,13 @@
   <div style="padding:30px;">
     <el-form label-position="right" label-width="100px">
       <el-form-item label="로봇 IP 주소">
-        <el-input class="input-ip" />.
-        <el-input class="input-ip" />.
-        <el-input class="input-ip" />.
-        <el-input class="input-ip" />
+        <el-input-number v-model="ip1" :controls="false" class="input-ip" />.
+        <el-input-number v-model="ip2" :controls="false" class="input-ip" />.
+        <el-input-number v-model="ip3" :controls="false" class="input-ip" />.
+        <el-input-number v-model="ip4" :controls="false" class="input-ip" />
+      </el-form-item>
+      <el-form-item>
+        <p>IP주소:{{ ip1 }}</p>
         <el-button @click="connect = true">로봇 연결</el-button>
         <el-alert v-if="connect" title="연결이 확인되었습니다." type="success" />
       </el-form-item>
@@ -21,7 +24,11 @@ export default {
   name: 'AddRobot',
   data() {
     return {
-      connect: false
+      connect: false,
+      ip1: 0,
+      ip2: 0,
+      ip3: 0,
+      ip4: 0
     }
   }
 }
